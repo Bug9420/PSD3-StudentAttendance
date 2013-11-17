@@ -185,7 +185,10 @@ public class attendanceMonitoring{
 		System.out.println("1. View all students");
 		System.out.println("2. Edit attendance");
 		System.out.println("3. Export CSV file");
-		System.out.println("Please select 1 - 3: ");
+		System.out.println("4. Import Barcode CSV File");
+		System.out.println("5. Edit Barcode CSV File");
+		System.out.println("6. Back");
+		System.out.println("Please select 1 - 6: ");
 		
 		Scanner scan2 = new Scanner(System.in);
 		
@@ -206,9 +209,23 @@ public class attendanceMonitoring{
 				break;
 			case 3:
 				exportAllAtt();
+				printNextFunction(course);
+				break;
+			case 4:
+				importBarcodeCSV();
+				printNextFunction(course);
+				break;
+			case 5:
+				printEditBarcode(course);
+				printNextFunction(course);
+				break;
+			case 6:
+				//System.out.println(allStudent.size());
+				allStudent.clear();
+				printFunctions();
 				break;
 			default: 
-				System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+				System.out.print("That is not a valid input!\nPlease enter 1 - 6: ");
 				getInput2 = scan2.next();
 				getUserInput = Integer.parseInt(getInput2);
 				break;
@@ -258,17 +275,26 @@ public class attendanceMonitoring{
 				case 1:
 					
 					newAttendance = info[0] + "," + info[1] + ","+ "Present";
+					System.out.println(newAttendance);
 					allStudent.add(newAttendance);
+					//allDupStudent.add("null");
+					//allStudent.remove(i);
 					break;
 				case 2:
 					
 					newAttendance = info[0] + "," + info[1] + ","+ "Absent";
+					System.out.println(newAttendance);
 					allStudent.add(newAttendance);
+					//allDupStudent.add("null");
+					//allStudent.remove(i);
 					break;
 				case 3:
 					
 					newAttendance = info[0] + "," + info[1] + ","+ "mv";
+					System.out.println(newAttendance);
 					allStudent.add(newAttendance);
+					//allDupStudent.add("null");
+					//allStudent.remove(i);
 					break;
 				default: 
 					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
@@ -277,6 +303,23 @@ public class attendanceMonitoring{
 					break;
 			}
 			//scan.close();
+		}
+		
+		
+		for(int i=0; i<totalStudent; i++){
+			//System.out.println("You removed "+ allStudent.get(i));
+			/*if(allStudent.get(i) == allDupStudent.get(i)){
+				allStudent.remove(i);
+				allDupStudent.remove(i);
+				System.out.println("You removed "+ allStudent.get(i));
+			}*/
+			//System.out.println(allStudent.get(i));
+			//allStudent.remove();
+			//System.out.println("You removed " + allStudent.get(i));
+			
+			//allStudent.remove(new Integer(i));
+			//allStudent.remove();
+			allStudent.remove(0);
 		}
 	}
 	
@@ -334,6 +377,178 @@ public class attendanceMonitoring{
 		     e.printStackTrace();
 		}
 		//scan.close();
+	}
+	
+	public void importBarcodeCSV(){
+		System.out.println("Where is your CSV file located?");
+		
+		Scanner scan = new Scanner(System.in);
+		
+		String getInput = scan.next();
+		//String getUserInput = getInput;	
+		
+		csvFile = getInput;
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		 
+		try {
+	 
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null) {
+				
+				studentBarcode.add(line);
+				//allDupStudent.add(line);
+				//System.out.println(line);
+			        // use comma as separator
+				String[] info = line.split(cvsSplitBy);
+				
+				System.out.println("Student ID(Barcode No.): " + info[0] + "\tAttendance: " + info[1]);
+	 
+			}
+	 
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (br != null) {
+				try {
+					br.close();
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("Succesfully imported");
+	}
+	
+public void printEditBarcode(String course){
+		
+		String line = "";
+		String cvsSplitBy = ",";
+		
+		int totalStudent = studentBarcode.size();
+		
+		//System.out.println(allStudent.get(0));
+		for(int i=0; i<totalStudent; i++){
+			line = studentBarcode.get(i);
+			
+			//allStudent.remove(i);
+			
+			String[] info = line.split(cvsSplitBy);
+			
+			System.out.println("Student ID(Barcode No.): " + info[0]);
+			System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+			System.out.println("Please select 1 - 3");
+			
+			Scanner scan = new Scanner(System.in);
+			
+			String getInput = scan.next();
+			int getUserInput = Integer.parseInt(getInput);	
+			
+			String newAttendance = "";
+			switch(getUserInput){
+				case 1:
+					
+					newAttendance = info[0] + "," + "Present";
+					System.out.println(newAttendance);
+					studentBarcode.add(newAttendance);
+					//allDupStudent.add("null");
+					//allStudent.remove(i);
+					break;
+				case 2:
+					
+					newAttendance = info[0] + "," + "Absent";
+					System.out.println(newAttendance);
+					studentBarcode.add(newAttendance);
+					//allDupStudent.add("null");
+					//allStudent.remove(i);
+					break;
+				case 3:
+					
+					newAttendance = info[0] + "," + "mv";
+					System.out.println(newAttendance);
+					studentBarcode.add(newAttendance);
+					//allDupStudent.add("null");
+					//allStudent.remove(i);
+					break;
+				default: 
+					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+					getInput = scan.next();
+					getUserInput = Integer.parseInt(getInput);
+					break;
+			}
+			//scan.close();
+		}
+		
+		
+		for(int i=0; i<totalStudent; i++){
+			//System.out.println("You removed "+ allStudent.get(i));
+			/*if(allStudent.get(i) == allDupStudent.get(i)){
+				allStudent.remove(i);
+				allDupStudent.remove(i);
+				System.out.println("You removed "+ allStudent.get(i));
+			}*/
+			//System.out.println(allStudent.get(i));
+			//allStudent.remove();
+			//System.out.println("You removed " + allStudent.get(i));
+			
+			//allStudent.remove(new Integer(i));
+			//allStudent.remove();
+			studentBarcode.remove(0);
+		}
+		
+		try
+		{
+			File newFile = new File(csvFile);
+			System.out.println(csvFile);
+			if(newFile.exists()){
+			    newFile.delete();
+			    
+			    FileWriter writer = new FileWriter(newFile, true);
+			    
+			    String lineName = "";
+				//String cvsSplitBy = ",";
+				for(int i=0; i<studentBarcode.size(); i++){
+					lineName = studentBarcode.get(i);
+					
+					//String[] info = line.split(cvsSplitBy);
+				
+					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					writer.append(lineName+'\n');
+				}
+				writer.close();
+			}
+			else{
+				FileWriter writer = new FileWriter(newFile, true);
+			    
+			    String lineName = "";
+				//String cvsSplitBy = ",";
+				for(int i=0; i<allStudent.size(); i++){
+					lineName = allStudent.get(i);
+					
+					//String[] info = line.split(cvsSplitBy);
+				
+					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					writer.append(lineName+'\n');
+				}
+				writer.close();
+			}
+			    //generate whatever data you want
+		 
+				System.out.println("File sucessfully exported");
+			    //writer.flush();
+			
+		}
+		catch(IOException e)
+		{
+		     e.printStackTrace();
+		}
 	}
 	
 	  public void importAttendance(String courses) {
