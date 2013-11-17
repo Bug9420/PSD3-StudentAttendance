@@ -10,6 +10,7 @@ public class Main{
 		//Call export grade class file
 		
 		//Call tutor get attandance class file
+		attendanceMonitoring attMonitor = new attendanceMonitoring();
 		
 		System.out.println("Hello, are you a:");
 		System.out.println("1. Admin");
@@ -39,13 +40,20 @@ public class Main{
 					break;
 					
 				case 2:
-					System.out.println("You choose 2. Tutor");
+					//System.out.println("You choose 2. Tutor");
+					attMonitor.printFunctions();
 					getIntInput = 0;
 					break;
 					
 				case 3:
 					System.out.println("You choose 3. Student");
 					getIntInput = 0;
+					break;
+					
+				default: 
+					System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
+					getInput = scan.next();
+					getIntInput = Integer.parseInt(getInput);
 					break;
 			}
 		}
