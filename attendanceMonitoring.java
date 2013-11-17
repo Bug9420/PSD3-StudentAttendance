@@ -8,121 +8,6 @@ import java.util.*;
 
 public class attendanceMonitoring{
 	
-	/*public void printFunctions(){
-		
-		ArrayList<String> allCourses = new ArrayList<String>();
-		allCourses.add("PSD3");
-		allCourses.add("ALG3");
-		allCourses.add("PL3");
-		
-		System.out.println("All courses: ");
-		
-		for(int i=0; i<allCourses.size(); i++){
-			
-			System.out.println(i+1 + ". " + allCourses.get(i));
-			
-		}
-		
-		System.out.println("Please select a course: ");
-		
-		Scanner scan = new Scanner(System.in);
-		
-		String getInput = scan.next();
-		int getAttInput = Integer.parseInt(getInput);	
-		switch(getAttInput){
-			case 1:
-				//call another function
-				printPSD3();
-				break;
-			case 2:
-				//call another function
-				
-				break;
-			case 3:
-				//call another function
-			default: 
-				System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
-				getInput = scan.next();
-				getAttInput = Integer.parseInt(getInput);
-				break;
-		}
-		scan.close();
-	}
-	
-	public void printPSD3(){
-		System.out.println("Please select which date");
-		System.out.println("1. 04/11/2013");
-		System.out.println("2. 11/11/2013");
-		System.out.println("3. 18/11/2013");
-		System.out.println("4. 25/11/2013");
-		
-		ArrayList<String> studentNames = new ArrayList<String>();
-		//String[] arr = null;
-		
-		studentNames.add("2010001, Yee Keng, YTT");
-		studentNames.add("2010002, Daemian, YTT");
-		studentNames.add("2010003, Boon Keong, YTT");
-		studentNames.add("2010004, WinWin, YTT");
-		
-		Scanner scan = new Scanner(System.in);
-		
-		String getInput = scan.next();
-		int getDateInput = Integer.parseInt(getInput);	
-		switch(getDateInput){
-			case 1:
-
-				System.out.println("Timing available for 04/11/2013");
-				System.out.println("0900 hrs - 1100 hrs");
-				System.out.println("1300 hrs - 1500 hrs");
-				
-				Scanner scan2 = new Scanner(System.in);
-				
-				String getInput2 = scan2.next();
-				int getTimeInput = Integer.parseInt(getInput2);	
-				switch(getTimeInput){
-					case 1:
-						//print all students who are in this course at 0900-1100hrs
-						System.out.println("You selected 0900 hrs - 1100 hrs");
-						for(int x=0; x<studentNames.size(); x++){
-							System.out.println(x + ". " +studentNames.get(x));
-						}
-						
-						Scanner scan3 = new Scanner(System.in);
-						
-						String getInput3 = scan3.next();
-						//arr = getInput3;
-						
-						break;
-					case 2:
-						//print all students who are in this course at 1300-1500hrs
-						break;
-					default: 
-						System.out.print("That is not a valid input!\nPlease re-enter: ");
-						getInput2 = scan.next();
-						getDateInput = Integer.parseInt(getInput2);
-						break;
-				}
-				scan2.close();
-			case 2:
-				//call another function
-				
-				break;
-			case 3:
-				//call another function
-				break;
-			
-			case 4:
-				
-				break;
-			default: 
-				System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
-				getInput = scan.next();
-				getDateInput = Integer.parseInt(getInput);
-				break;
-		}
-		scan.close();
-	}*/
-	
 	ArrayList<String> allStudent = new ArrayList<String>();
 	ArrayList<String> studentBarcode = new ArrayList<String>();
 	String csvFile = "";
@@ -150,23 +35,14 @@ public class attendanceMonitoring{
 		int getAttInput = Integer.parseInt(getInput);	
 		switch(getAttInput){
 			case 1:
-				
 				importAttendance("studentAttPSD");
 				printNextFunction("PSD3");
-				
 				break;
 			case 2:
-				//call another function
-				//importAttendance("studentAttALG");
-				//printFunctions();
 				importAttendance("studentAttALG");
 				printNextFunction("ALG33");
 				break;
 			case 3:
-				//call another function
-				//importAttendance("studentAttPL");
-				//printFunctions();
-				
 				importAttendance("studentAttPL");
 				printNextFunction("PL3");
 				break;
@@ -194,9 +70,6 @@ public class attendanceMonitoring{
 		
 		String getInput2 = scan2.next();
 		int getUserInput = Integer.parseInt(getInput2);	
-		//call another function
-		//importAttendance("studentAttPSD");
-		//printFunctions();
 		switch(getUserInput){
 			case 1:
 				System.out.println("Students in "+ course +" lesson");
@@ -220,7 +93,6 @@ public class attendanceMonitoring{
 				printNextFunction(course);
 				break;
 			case 6:
-				//System.out.println(allStudent.size());
 				allStudent.clear();
 				printFunctions();
 				break;
@@ -253,11 +125,8 @@ public class attendanceMonitoring{
 		
 		int totalStudent = allStudent.size();
 		
-		//System.out.println(allStudent.get(0));
 		for(int i=0; i<totalStudent; i++){
 			line = allStudent.get(i);
-			
-			//allStudent.remove(i);
 			
 			String[] info = line.split(cvsSplitBy);
 			
@@ -277,24 +146,18 @@ public class attendanceMonitoring{
 					newAttendance = info[0] + "," + info[1] + ","+ "Present";
 					System.out.println(newAttendance);
 					allStudent.add(newAttendance);
-					//allDupStudent.add("null");
-					//allStudent.remove(i);
 					break;
 				case 2:
 					
 					newAttendance = info[0] + "," + info[1] + ","+ "Absent";
 					System.out.println(newAttendance);
 					allStudent.add(newAttendance);
-					//allDupStudent.add("null");
-					//allStudent.remove(i);
 					break;
 				case 3:
 					
 					newAttendance = info[0] + "," + info[1] + ","+ "mv";
 					System.out.println(newAttendance);
 					allStudent.add(newAttendance);
-					//allDupStudent.add("null");
-					//allStudent.remove(i);
 					break;
 				default: 
 					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
@@ -302,23 +165,10 @@ public class attendanceMonitoring{
 					getUserInput = Integer.parseInt(getInput);
 					break;
 			}
-			//scan.close();
 		}
 		
 		
 		for(int i=0; i<totalStudent; i++){
-			//System.out.println("You removed "+ allStudent.get(i));
-			/*if(allStudent.get(i) == allDupStudent.get(i)){
-				allStudent.remove(i);
-				allDupStudent.remove(i);
-				System.out.println("You removed "+ allStudent.get(i));
-			}*/
-			//System.out.println(allStudent.get(i));
-			//allStudent.remove();
-			//System.out.println("You removed " + allStudent.get(i));
-			
-			//allStudent.remove(new Integer(i));
-			//allStudent.remove();
 			allStudent.remove(0);
 		}
 	}
@@ -340,13 +190,10 @@ public class attendanceMonitoring{
 			    FileWriter writer = new FileWriter(newFile, true);
 			    
 			    String line = "";
-				//String cvsSplitBy = ",";
+			    
 				for(int i=0; i<allStudent.size(); i++){
-					line = allStudent.get(i);
 					
-					//String[] info = line.split(cvsSplitBy);
-				
-					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					line = allStudent.get(i);
 					writer.append(line+'\n');
 				}
 				writer.close();
@@ -355,13 +202,9 @@ public class attendanceMonitoring{
 				FileWriter writer = new FileWriter(newFile, true);
 			    
 			    String line = "";
-				//String cvsSplitBy = ",";
 				for(int i=0; i<allStudent.size(); i++){
-					line = allStudent.get(i);
 					
-					//String[] info = line.split(cvsSplitBy);
-				
-					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					line = allStudent.get(i);
 					writer.append(line+'\n');
 				}
 				writer.close();
@@ -369,14 +212,12 @@ public class attendanceMonitoring{
 			    //generate whatever data you want
 		 
 				System.out.println("File sucessfully exported");
-			    //writer.flush();
 			
 		}
 		catch(IOException e)
 		{
 		     e.printStackTrace();
 		}
-		//scan.close();
 	}
 	
 	public void importBarcodeCSV(){
@@ -384,8 +225,7 @@ public class attendanceMonitoring{
 		
 		Scanner scan = new Scanner(System.in);
 		
-		String getInput = scan.next();
-		//String getUserInput = getInput;	
+		String getInput = scan.next();	
 		
 		csvFile = getInput;
 		BufferedReader br = null;
@@ -398,8 +238,6 @@ public class attendanceMonitoring{
 			while ((line = br.readLine()) != null) {
 				
 				studentBarcode.add(line);
-				//allDupStudent.add(line);
-				//System.out.println(line);
 			        // use comma as separator
 				String[] info = line.split(cvsSplitBy);
 				
@@ -434,11 +272,8 @@ public void printEditBarcode(String course){
 		
 		int totalStudent = studentBarcode.size();
 		
-		//System.out.println(allStudent.get(0));
 		for(int i=0; i<totalStudent; i++){
 			line = studentBarcode.get(i);
-			
-			//allStudent.remove(i);
 			
 			String[] info = line.split(cvsSplitBy);
 			
@@ -458,24 +293,18 @@ public void printEditBarcode(String course){
 					newAttendance = info[0] + "," + "Present";
 					System.out.println(newAttendance);
 					studentBarcode.add(newAttendance);
-					//allDupStudent.add("null");
-					//allStudent.remove(i);
 					break;
 				case 2:
 					
 					newAttendance = info[0] + "," + "Absent";
 					System.out.println(newAttendance);
 					studentBarcode.add(newAttendance);
-					//allDupStudent.add("null");
-					//allStudent.remove(i);
 					break;
 				case 3:
 					
 					newAttendance = info[0] + "," + "mv";
 					System.out.println(newAttendance);
 					studentBarcode.add(newAttendance);
-					//allDupStudent.add("null");
-					//allStudent.remove(i);
 					break;
 				default: 
 					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
@@ -483,23 +312,10 @@ public void printEditBarcode(String course){
 					getUserInput = Integer.parseInt(getInput);
 					break;
 			}
-			//scan.close();
 		}
 		
 		
 		for(int i=0; i<totalStudent; i++){
-			//System.out.println("You removed "+ allStudent.get(i));
-			/*if(allStudent.get(i) == allDupStudent.get(i)){
-				allStudent.remove(i);
-				allDupStudent.remove(i);
-				System.out.println("You removed "+ allStudent.get(i));
-			}*/
-			//System.out.println(allStudent.get(i));
-			//allStudent.remove();
-			//System.out.println("You removed " + allStudent.get(i));
-			
-			//allStudent.remove(new Integer(i));
-			//allStudent.remove();
 			studentBarcode.remove(0);
 		}
 		
@@ -513,13 +329,9 @@ public void printEditBarcode(String course){
 			    FileWriter writer = new FileWriter(newFile, true);
 			    
 			    String lineName = "";
-				//String cvsSplitBy = ",";
 				for(int i=0; i<studentBarcode.size(); i++){
-					lineName = studentBarcode.get(i);
 					
-					//String[] info = line.split(cvsSplitBy);
-				
-					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					lineName = studentBarcode.get(i);
 					writer.append(lineName+'\n');
 				}
 				writer.close();
@@ -528,22 +340,15 @@ public void printEditBarcode(String course){
 				FileWriter writer = new FileWriter(newFile, true);
 			    
 			    String lineName = "";
-				//String cvsSplitBy = ",";
 				for(int i=0; i<allStudent.size(); i++){
-					lineName = allStudent.get(i);
 					
-					//String[] info = line.split(cvsSplitBy);
-				
-					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					lineName = allStudent.get(i);
 					writer.append(lineName+'\n');
 				}
 				writer.close();
 			}
 			    //generate whatever data you want
-		 
 				System.out.println("File sucessfully exported");
-			    //writer.flush();
-			
 		}
 		catch(IOException e)
 		{
@@ -556,8 +361,6 @@ public void printEditBarcode(String course){
 		  String csvFile = "/Users/User/workspace/PSD3-Assignment1/" + courses + ".csv";
     	  BufferedReader br = null;
 		  String line = "";
-		  //String cvsSplitBy = ",";
-		 
 		  	try {
 		 
 		  		
@@ -565,12 +368,6 @@ public void printEditBarcode(String course){
 				while ((line = br.readLine()) != null) {
 					
 					allStudent.add(line);
-					//System.out.println(line);
-				        // use comma as separator
-					//String[] info = line.split(cvsSplitBy);
-					
-					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
-		 
 				}
 		 
 			} 
@@ -590,7 +387,6 @@ public void printEditBarcode(String course){
 					}
 				}
 			}
-			//System.out.println("Import Successful!");
 		  }
 	
 }
