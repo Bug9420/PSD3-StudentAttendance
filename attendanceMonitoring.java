@@ -184,7 +184,8 @@ public class attendanceMonitoring{
 		System.out.println("You have slected: "+course+".\nDo you want to: ");
 		System.out.println("1. View all students");
 		System.out.println("2. Edit attendance");
-		System.out.println("Please select 1 - 6: ");
+		System.out.println("3. Export CSV file");
+		System.out.println("Please select 1 - 3: ");
 		
 		Scanner scan2 = new Scanner(System.in);
 		
@@ -197,8 +198,14 @@ public class attendanceMonitoring{
 			case 1:
 				System.out.println("Students in "+ course +" lesson");
 				printAllAtt();
+				printNextFunction(course);
 				break;
 			case 2:
+				printEditAtt(course);
+				printNextFunction(course);
+				break;
+			case 3:
+				exportAllAtt();
 				break;
 			default: 
 				System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
@@ -221,6 +228,113 @@ public class attendanceMonitoring{
 				System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
 			}
 		}
+	
+	public void printEditAtt(String course){
+		
+		String line = "";
+		String cvsSplitBy = ",";
+		
+		int totalStudent = allStudent.size();
+		
+		//System.out.println(allStudent.get(0));
+		for(int i=0; i<totalStudent; i++){
+			line = allStudent.get(i);
+			
+			//allStudent.remove(i);
+			
+			String[] info = line.split(cvsSplitBy);
+			
+			System.out.println("Student ID: " + info[0] + "\tName: " + info[1]);
+			System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+			System.out.println("Please select 1 - 3");
+			
+			Scanner scan = new Scanner(System.in);
+			
+			String getInput = scan.next();
+			int getUserInput = Integer.parseInt(getInput);	
+			
+			String newAttendance = "";
+			switch(getUserInput){
+				case 1:
+					
+					newAttendance = info[0] + "," + info[1] + ","+ "Present";
+					allStudent.add(newAttendance);
+					break;
+				case 2:
+					
+					newAttendance = info[0] + "," + info[1] + ","+ "Absent";
+					allStudent.add(newAttendance);
+					break;
+				case 3:
+					
+					newAttendance = info[0] + "," + info[1] + ","+ "mv";
+					allStudent.add(newAttendance);
+					break;
+				default: 
+					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+					getInput = scan.next();
+					getUserInput = Integer.parseInt(getInput);
+					break;
+			}
+			//scan.close();
+		}
+	}
+	
+	public void exportAllAtt(){
+		
+		System.out.println("File Name(without any extention name):");
+		Scanner scan = new Scanner(System.in);
+		
+		String getInput = scan.next();
+		String getUserInput = getInput;	
+		
+		try
+		{
+			File newFile = new File("/Users/User/workspace/PSD3-Assignment1/" + getUserInput + ".csv");
+			if(newFile.exists()){
+			    newFile.delete();
+			    
+			    FileWriter writer = new FileWriter(newFile, true);
+			    
+			    String line = "";
+				//String cvsSplitBy = ",";
+				for(int i=0; i<allStudent.size(); i++){
+					line = allStudent.get(i);
+					
+					//String[] info = line.split(cvsSplitBy);
+				
+					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					writer.append(line+'\n');
+				}
+				writer.close();
+			}
+			else{
+				FileWriter writer = new FileWriter(newFile, true);
+			    
+			    String line = "";
+				//String cvsSplitBy = ",";
+				for(int i=0; i<allStudent.size(); i++){
+					line = allStudent.get(i);
+					
+					//String[] info = line.split(cvsSplitBy);
+				
+					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+					writer.append(line+'\n');
+				}
+				writer.close();
+			}
+			    //generate whatever data you want
+		 
+				System.out.println("File sucessfully exported");
+			    //writer.flush();
+			
+		}
+		catch(IOException e)
+		{
+		     e.printStackTrace();
+		}
+		//scan.close();
+	}
 	
 	  public void importAttendance(String courses) {
 		  
