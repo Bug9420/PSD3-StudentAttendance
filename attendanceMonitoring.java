@@ -8,7 +8,7 @@ import java.util.*;
 
 public class attendanceMonitoring{
 	
-	public void printFunctions(){
+	/*public void printFunctions(){
 		
 		ArrayList<String> allCourses = new ArrayList<String>();
 		allCourses.add("PSD3");
@@ -121,6 +121,90 @@ public class attendanceMonitoring{
 				break;
 		}
 		scan.close();
+	}*/
+	
+	ArrayList<String> allStudent = new ArrayList<String>();
+   
+	public void printFunctions(){
+		
+		ArrayList<String> allCourses = new ArrayList<String>();
+		allCourses.add("PSD3");
+		allCourses.add("ALG3");
+		allCourses.add("PL3");
+		
+		System.out.println("All courses: ");
+		
+		for(int i=0; i<allCourses.size(); i++){
+			
+			System.out.println(i+1 + ". " + allCourses.get(i));
+			
+		}
+		
+		System.out.println("Please select a course: ");
+		
+		Scanner scan = new Scanner(System.in);
+		
+		String getInput = scan.next();
+		int getAttInput = Integer.parseInt(getInput);	
+		switch(getAttInput){
+			case 1:
+				importAttendance("studentAttPSD");
+				break;
+			case 2:
+				//call another function
+				importAttendance("studentAttALG");
+				break;
+			case 3:
+				//call another function
+				importAttendance("studentAttPL");
+				break;
+			default: 
+				System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
+				getInput = scan.next();
+				getAttInput = Integer.parseInt(getInput);
+				break;
+		}
+		scan.close();
 	}
+	
+	  public void importAttendance(String courses) {
+		  
+		  String csvFile = "/Users/User/workspace/PSD3-Assignment1/" + courses + ".csv";
+    	  BufferedReader br = null;
+		  String line = "";
+		  //String cvsSplitBy = ",";
+		 
+		  	try {
+				br = new BufferedReader(new FileReader(csvFile));
+				while ((line = br.readLine()) != null) {
+					
+					allStudent.add(line);
+					//System.out.println(line);
+				        // use comma as separator
+					//String[] info = line.split(cvsSplitBy);
+					
+					//System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+		 
+				}
+		 
+			} 
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			} 
+			finally {
+				if (br != null) {
+					try {
+						br.close();
+					} 
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			//System.out.println("Import Successful!");
+		  }
 	
 }
