@@ -124,6 +124,8 @@ public class attendanceMonitoring{
 	}*/
 	
 	ArrayList<String> allStudent = new ArrayList<String>();
+	ArrayList<String> studentBarcode = new ArrayList<String>();
+	String csvFile = "";
    
 	public void printFunctions(){
 		
@@ -148,15 +150,25 @@ public class attendanceMonitoring{
 		int getAttInput = Integer.parseInt(getInput);	
 		switch(getAttInput){
 			case 1:
+				
 				importAttendance("studentAttPSD");
+				printNextFunction("PSD3");
+				
 				break;
 			case 2:
 				//call another function
+				//importAttendance("studentAttALG");
+				//printFunctions();
 				importAttendance("studentAttALG");
+				printNextFunction("ALG33");
 				break;
 			case 3:
 				//call another function
+				//importAttendance("studentAttPL");
+				//printFunctions();
+				
 				importAttendance("studentAttPL");
+				printNextFunction("PL3");
 				break;
 			default: 
 				System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
@@ -167,6 +179,49 @@ public class attendanceMonitoring{
 		scan.close();
 	}
 	
+	public void printNextFunction(String course){
+		
+		System.out.println("You have slected: "+course+".\nDo you want to: ");
+		System.out.println("1. View all students");
+		System.out.println("2. Edit attendance");
+		System.out.println("Please select 1 - 6: ");
+		
+		Scanner scan2 = new Scanner(System.in);
+		
+		String getInput2 = scan2.next();
+		int getUserInput = Integer.parseInt(getInput2);	
+		//call another function
+		//importAttendance("studentAttPSD");
+		//printFunctions();
+		switch(getUserInput){
+			case 1:
+				System.out.println("Students in "+ course +" lesson");
+				printAllAtt();
+				break;
+			case 2:
+				break;
+			default: 
+				System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+				getInput2 = scan2.next();
+				getUserInput = Integer.parseInt(getInput2);
+				break;
+		}
+		scan2.close();
+	}
+	
+	public void printAllAtt(){
+			
+			String line = "";
+			String cvsSplitBy = ",";
+			for(int i=0; i<allStudent.size(); i++){
+				line = allStudent.get(i);
+				
+				String[] info = line.split(cvsSplitBy);
+			
+				System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+			}
+		}
+	
 	  public void importAttendance(String courses) {
 		  
 		  String csvFile = "/Users/User/workspace/PSD3-Assignment1/" + courses + ".csv";
@@ -175,6 +230,8 @@ public class attendanceMonitoring{
 		  //String cvsSplitBy = ",";
 		 
 		  	try {
+		 
+		  		
 				br = new BufferedReader(new FileReader(csvFile));
 				while ((line = br.readLine()) != null) {
 					
