@@ -70,8 +70,39 @@ public class attendanceMonitoring{
 		int getDateInput = Integer.parseInt(getInput);	
 		switch(getDateInput){
 			case 1:
-			
-				break;
+
+				System.out.println("Timing available for 04/11/2013");
+				System.out.println("0900 hrs - 1100 hrs");
+				System.out.println("1300 hrs - 1500 hrs");
+				
+				Scanner scan2 = new Scanner(System.in);
+				
+				String getInput2 = scan2.next();
+				int getTimeInput = Integer.parseInt(getInput2);	
+				switch(getTimeInput){
+					case 1:
+						//print all students who are in this course at 0900-1100hrs
+						System.out.println("You selected 0900 hrs - 1100 hrs");
+						for(int x=0; x<studentNames.size(); x++){
+							System.out.println(x + ". " +studentNames.get(x));
+						}
+						
+						Scanner scan3 = new Scanner(System.in);
+						
+						String getInput3 = scan3.next();
+						//arr = getInput3;
+						
+						break;
+					case 2:
+						//print all students who are in this course at 1300-1500hrs
+						break;
+					default: 
+						System.out.print("That is not a valid input!\nPlease re-enter: ");
+						getInput2 = scan.next();
+						getDateInput = Integer.parseInt(getInput2);
+						break;
+				}
+				scan2.close();
 			case 2:
 				//call another function
 				
