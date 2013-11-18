@@ -11,6 +11,7 @@ public class attendanceMonitoring{
 	ArrayList<String> allStudent = new ArrayList<String>();
 	ArrayList<String> studentBarcode = new ArrayList<String>();
 	String csvFile = "";
+	String courseName = "";
    
 	public void printFunctions() throws IOException{
 		
@@ -35,15 +36,18 @@ public class attendanceMonitoring{
 		int getAttInput = Integer.parseInt(getInput);	
 		switch(getAttInput){
 			case 1:
-				importAttendance("studentAttPSD");
+				courseName = "studentAtt_PSD";
+				importAttendance("studentAtt_PSD");
 				printNextFunction("PSD3");
 				break;
 			case 2:
-				importAttendance("studentAttALG");
+				courseName = "studentAtt_ALG";
+				importAttendance("studentAtt_ALG");
 				printNextFunction("ALG33");
 				break;
 			case 3:
-				importAttendance("studentAttPL");
+				courseName = "studentAtt_PL";
+				importAttendance("studentAtt_PL");
 				printNextFunction("PL3");
 				break;
 			case 4:
@@ -51,6 +55,7 @@ public class attendanceMonitoring{
 				break;
 			default: 
 				System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
+				printFunctions();
 				getInput = scan.next();
 				getAttInput = Integer.parseInt(getInput);
 				break;
@@ -80,7 +85,8 @@ public class attendanceMonitoring{
 				printNextFunction(course);
 				break;
 			case 2:
-				printEditAtt(course);
+				//printEditAtt(course);
+				chooseAtt(course);
 				printNextFunction(course);
 				break;
 			case 3:
@@ -101,6 +107,7 @@ public class attendanceMonitoring{
 				break;
 			default: 
 				System.out.print("That is not a valid input!\nPlease enter 1 - 6: ");
+				printNextFunction(course);
 				getInput2 = scan2.next();
 				getUserInput = Integer.parseInt(getInput2);
 				break;
@@ -110,69 +117,314 @@ public class attendanceMonitoring{
 	
 	public void printAllAtt(){
 			
-			String line = "";
-			String cvsSplitBy = ",";
-			for(int i=0; i<allStudent.size(); i++){
-				line = allStudent.get(i);
-				
-				String[] info = line.split(cvsSplitBy);
+		String line = "";
+		String cvsSplitBy = ",";
+		String header = allStudent.get(0);
+		String[] headerInfo = header.split(cvsSplitBy);
+		for(int i=1; i<allStudent.size(); i++){
+			line = allStudent.get(i);
 			
-				System.out.println("Student ID: " + info[0] + "\tName: " + info[1] + "\nAttendance: "+ info[2]);
+			String[] info = line.split(cvsSplitBy);
+			
+				System.out.println("Student ID: " + info[2] + "\tName: " + info[0] + " " + info[1] + "\n" + headerInfo[3]+ ": " + info[3] + "\t" + headerInfo[4]+ ": " + info[4] + "\t" + headerInfo[5]+ ": " + info[5] + "\t" + headerInfo[6]+ ": " + info[6] + "\t" + headerInfo[7]+ ": " + info[7]);
 			}
 		}
 	
-	public void printEditAtt(String course){
+	public void chooseAtt(String course) throws IOException{
+		
+		String line = "";
+		String cvsSplitBy = ",";
+		String[] info = null;
+		
+		System.out.println("Please choose which assignment/lab you want to edit");
+		//for(int i=1; i<allStudent.size(); i++){
+			line = allStudent.get(0);
+			
+			info = line.split(cvsSplitBy);
+			
+			System.out.println("1. " + info[3]);
+			System.out.println("2. " + info[4]);
+			System.out.println("3. " + info[5]);
+			System.out.println("4. " + info[6]);
+			System.out.println("5. " + info[7]);
+			System.out.println("6. Back");
+		//}
+		
+		System.out.println("Input: ");
+		
+		Scanner scan = new Scanner(System.in);
+		
+		String getInput = scan.next();
+		int getUserInput = Integer.parseInt(getInput);	
+		switch(getUserInput){
+			case 1:
+				printEditAtt(course, info[3]);
+				chooseAtt(course);
+				break;
+			case 2:
+				printEditAtt(course, info[4]);
+				chooseAtt(course);
+				break;
+			case 3:
+				printEditAtt(course, info[5]);
+				chooseAtt(course);
+				break;
+			case 4:
+				printEditAtt(course, info[6]);
+				chooseAtt(course);
+				break;
+			case 5:
+				printEditAtt(course, info[7]);
+				chooseAtt(course);
+				break;
+			case 6:
+				printNextFunction(course);
+				break;
+			default: 
+				System.out.print("That is not a valid input!\nPlease enter 1 - 6: ");
+				chooseAtt(course);
+				getInput = scan.next();
+				getUserInput = Integer.parseInt(getInput);
+				break;
+		}
+	}
+	
+	public void printEditAtt(String course, String assn){
 		
 		String line = "";
 		String cvsSplitBy = ",";
 		
 		int totalStudent = allStudent.size();
+		String header = allStudent.get(0);
+		String[] headerInfo = header.split(cvsSplitBy);
 		
-		for(int i=0; i<totalStudent; i++){
+		System.out.println(assn);
+		for(int i=1; i<totalStudent; i++){
 			line = allStudent.get(i);
 			
 			String[] info = line.split(cvsSplitBy);
-			
-			System.out.println("Student ID: " + info[0] + "\tName: " + info[1]);
-			System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
-			System.out.println("Please select 1 - 3");
-			
-			Scanner scan = new Scanner(System.in);
-			
-			String getInput = scan.next();
-			int getUserInput = Integer.parseInt(getInput);	
-			
-			String newAttendance = "";
-			switch(getUserInput){
-				case 1:
-					
-					newAttendance = info[0] + "," + info[1] + ","+ "Present";
-					System.out.println(newAttendance);
-					allStudent.add(newAttendance);
-					break;
-				case 2:
-					
-					newAttendance = info[0] + "," + info[1] + ","+ "Absent";
-					System.out.println(newAttendance);
-					allStudent.add(newAttendance);
-					break;
-				case 3:
-					
-					newAttendance = info[0] + "," + info[1] + ","+ "mv";
-					System.out.println(newAttendance);
-					allStudent.add(newAttendance);
-					break;
-				default: 
-					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
-					getInput = scan.next();
-					getUserInput = Integer.parseInt(getInput);
-					break;
+			System.out.println(info[3]);
+			if(assn.equals(headerInfo[3])){
+				System.out.println("Student ID: " + info[2] + "\tName: " + info[0] + " " + info[1]);
+				System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+				System.out.println("Please select 1 - 3");
+				
+				Scanner scan = new Scanner(System.in);
+				
+				String getInput = scan.next();
+				int getUserInput = Integer.parseInt(getInput);	
+				
+				String newAttendance = "";
+				switch(getUserInput){
+					case 1:
+						System.out.println("WORK!");
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ "Present" + "," + info[4] + "," + info[5] + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 2:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ "Absent" + "," + info[4] + "," + info[5] + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+					case 3:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ "mv" + "," + info[4] + "," + info[5] + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					default: 
+						System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+						printEditAtt(course, assn);
+						getInput = scan.next();
+						getUserInput = Integer.parseInt(getInput);
+						break;
+				}
 			}
+			else if(assn.equals(headerInfo[4])){
+				System.out.println("Student ID: " + info[2] + "\tName: " + info[0] + " " + info[1]);
+				System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+				System.out.println("Please select 1 - 3");
+				
+				Scanner scan = new Scanner(System.in);
+				
+				String getInput = scan.next();
+				int getUserInput = Integer.parseInt(getInput);	
+				
+				String newAttendance = "";
+				switch(getUserInput){
+					case 1:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + "Present" + "," + info[5] + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 2:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + "Absent" + "," + info[5] + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 3:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + "mv" + "," + info[5] + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					default: 
+						System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+						printEditAtt(course, assn);
+						getInput = scan.next();
+						getUserInput = Integer.parseInt(getInput);
+						break;
+				}
+			}
+			else if(assn.equals(headerInfo[5])){
+				System.out.println("Student ID: " + info[2] + "\tName: " + info[0] + " " + info[1]);
+				System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+				System.out.println("Please select 1 - 3");
+				
+				Scanner scan = new Scanner(System.in);
+				
+				String getInput = scan.next();
+				int getUserInput = Integer.parseInt(getInput);	
+				
+				String newAttendance = "";
+				switch(getUserInput){
+					case 1:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + "Present" + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 2:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + "Absent" + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 3:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + "mv" + "," + info[6] + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					default: 
+						System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+						printEditAtt(course, assn);
+						getInput = scan.next();
+						getUserInput = Integer.parseInt(getInput);
+						break;
+				}
+			}
+			else if(assn.equals(headerInfo[6])){
+				System.out.println("Student ID: " + info[2] + "\tName: " + info[0] + " " + info[1]);
+				System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+				System.out.println("Please select 1 - 3");
+				
+				Scanner scan = new Scanner(System.in);
+				
+				String getInput = scan.next();
+				int getUserInput = Integer.parseInt(getInput);	
+				
+				String newAttendance = "";
+				switch(getUserInput){
+					case 1:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + info[5] + "," + "Present" + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 2:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + info[5] + "," + "Absent" + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 3:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + info[5] + "," + "mv" + "," + info[7]; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					default: 
+						System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+						printEditAtt(course, assn);
+						getInput = scan.next();
+						getUserInput = Integer.parseInt(getInput);
+						break;
+				}
+			}
+			else if(assn.equals(headerInfo[7])){
+				System.out.println("Student ID: " + info[2] + "\tName: " + info[0] + " " + info[1]);
+				System.out.println("Attendance: 1. Present\t2. Absent\t3. mv");
+				System.out.println("Please select 1 - 3");
+				
+				Scanner scan = new Scanner(System.in);
+				
+				String getInput = scan.next();
+				int getUserInput = Integer.parseInt(getInput);	
+				
+				String newAttendance = "";
+				switch(getUserInput){
+					case 1:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + info[5] + "," + info[6] + "," + "Present"; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 2:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + info[5] + "," + info[6] + "," + "Absent"; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					case 3:
+						newAttendance = info[0] + "," + info[1] + "," + info[2] + ","+ info[3] + "," + info[4] + "," + info[5] + "," + info[6] + "," + "mv"; 
+						//System.out.println(newAttendance);
+						allStudent.add(newAttendance);
+						break;
+					default: 
+						System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+						printEditAtt(course, assn);
+						getInput = scan.next();
+						getUserInput = Integer.parseInt(getInput);
+						break;
+				}
+			}
+			else{
+				System.out.println("?!");
+			}
+			
 		}
 		
+		for(int i=0; i<totalStudent-1; i++){
+			allStudent.remove(1);
+		}
 		
-		for(int i=0; i<totalStudent; i++){
-			allStudent.remove(0);
+		try
+		{
+			File newFile = new File(courseName + ".csv");
+			if(newFile.exists()){
+			    newFile.delete();
+			    
+			    FileWriter writer = new FileWriter(newFile, true);
+			    
+			    String line2 = "";
+			    
+				for(int i=0; i<allStudent.size(); i++){
+					
+					line2 = allStudent.get(i);
+					writer.append(line2+'\n');
+				}
+				writer.close();
+			}
+			else{
+				FileWriter writer = new FileWriter(newFile, true);
+			    
+			    String line2 = "";
+				for(int i=0; i<allStudent.size(); i++){
+					
+					line2 = allStudent.get(i);
+					writer.append(line2+'\n');
+				}
+				writer.close();
+			}
+			    //generate whatever data you want
+		 
+				System.out.println("File saved sucessfully");
+			
+		}
+		catch(IOException e)
+		{
+		     e.printStackTrace();
 		}
 	}
 	
@@ -186,7 +438,7 @@ public class attendanceMonitoring{
 		
 		try
 		{
-			File newFile = new File("/Users/User/workspace/PSD3-Assignment1/" + getUserInput + ".csv");
+			File newFile = new File(getUserInput + ".csv");
 			if(newFile.exists()){
 			    newFile.delete();
 			    
@@ -311,6 +563,7 @@ public void printEditBarcode(String course){
 					break;
 				default: 
 					System.out.print("That is not a valid input!\nPlease enter 1 - 3: ");
+					printEditBarcode(course);
 					getInput = scan.next();
 					getUserInput = Integer.parseInt(getInput);
 					break;
@@ -361,7 +614,7 @@ public void printEditBarcode(String course){
 	
 	  public void importAttendance(String courses) {
 		  
-		  String csvFile = "/Users/User/workspace/PSD3-Assignment1/" + courses + ".csv";
+		  String csvFile = courses + ".csv";
     	  BufferedReader br = null;
 		  String line = "";
 		  	try {
