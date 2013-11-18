@@ -12,7 +12,7 @@ public class attendanceMonitoring{
 	ArrayList<String> studentBarcode = new ArrayList<String>();
 	String csvFile = "";
    
-	public void printFunctions(){
+	public void printFunctions() throws IOException{
 		
 		ArrayList<String> allCourses = new ArrayList<String>();
 		allCourses.add("PSD3");
@@ -26,7 +26,7 @@ public class attendanceMonitoring{
 			System.out.println(i+1 + ". " + allCourses.get(i));
 			
 		}
-		
+		System.out.println("4. Exit");
 		System.out.println("Please select a course: ");
 		
 		Scanner scan = new Scanner(System.in);
@@ -46,6 +46,9 @@ public class attendanceMonitoring{
 				importAttendance("studentAttPL");
 				printNextFunction("PL3");
 				break;
+			case 4:
+				Main.main(null);
+				break;
 			default: 
 				System.out.print("That is not a valid input!\nPlease enter 1 to 3: ");
 				getInput = scan.next();
@@ -55,7 +58,7 @@ public class attendanceMonitoring{
 		scan.close();
 	}
 	
-	public void printNextFunction(String course){
+	public void printNextFunction(String course) throws IOException{
 		
 		System.out.println("You have slected: "+course+".\nDo you want to: ");
 		System.out.println("1. View all students");
