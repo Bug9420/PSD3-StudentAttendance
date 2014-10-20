@@ -6,7 +6,7 @@ public class Main{
 	
 	public static void main(String args[]){
 		
-		
+		//
 		//Call export grade class file
 		
 		//Call tutor get attandance class file
@@ -16,14 +16,14 @@ public class Main{
 		System.out.println("1. Admin");
 		System.out.println("2. Tutor");
 		System.out.println("3. Student");
-		System.out.println("\nInput: ");
+		System.out.print("\nInput: ");
 		
-		Scanner scan = new Scanner(System.in);
+		Scanner scan = new Scanner(System.out);
 		
 		String getInput = scan.next();
 		int getIntInput = Integer.parseInt(getInput);		
 		
-		while(getIntInput != 0){
+		while(){
 			
 			switch(getIntInput){
 				
@@ -57,6 +57,6 @@ public class Main{
 					break;
 			}
 		}
-		scan.close();
+	
 	}
 }
